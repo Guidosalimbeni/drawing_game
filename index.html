@@ -10,6 +10,15 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M2TZM8LFZH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-M2TZM8LFZH');
+    </script>
   </head>
   <body>
     <header>
@@ -142,5 +151,67 @@
         </div>
       </div>
     </footer>
+
+    <!-- Add this before closing body tag -->
+    <script>
+        // Track scroll depth
+        window.addEventListener('scroll', function() {
+            let scrollPercentage = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
+            if (scrollPercentage > 25 && !window.tracked25) {
+                gtag('event', 'scroll_depth', {
+                    'event_category': 'engagement',
+                    'event_label': '25% scrolled'
+                });
+                window.tracked25 = true;
+            }
+            if (scrollPercentage > 50 && !window.tracked50) {
+                gtag('event', 'scroll_depth', {
+                    'event_category': 'engagement',
+                    'event_label': '50% scrolled'
+                });
+                window.tracked50 = true;
+            }
+            if (scrollPercentage > 75 && !window.tracked75) {
+                gtag('event', 'scroll_depth', {
+                    'event_category': 'engagement',
+                    'event_label': '75% scrolled'
+                });
+                window.tracked75 = true;
+            }
+        });
+
+        // Track time spent on page
+        let timeSpent = 0;
+        const timeInterval = setInterval(() => {
+            timeSpent += 30;
+            if (timeSpent === 30) {
+                gtag('event', 'time_spent', {
+                    'event_category': 'engagement',
+                    'event_label': '30 seconds'
+                });
+            } else if (timeSpent === 60) {
+                gtag('event', 'time_spent', {
+                    'event_category': 'engagement',
+                    'event_label': '1 minute'
+                });
+            } else if (timeSpent === 180) {
+                gtag('event', 'time_spent', {
+                    'event_category': 'engagement',
+                    'event_label': '3 minutes'
+                });
+                clearInterval(timeInterval);
+            }
+        }, 30000);
+
+        // Track video interaction if you have YouTube videos
+        document.querySelectorAll('iframe').forEach(frame => {
+            frame.addEventListener('click', function() {
+                gtag('event', 'video_interaction', {
+                    'event_category': 'engagement',
+                    'event_label': 'Video played'
+                });
+            });
+        });
+    </script>
   </body>
 </html>
